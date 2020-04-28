@@ -1,5 +1,6 @@
 class parkingLot{
-    constructor(){
+    constructor()
+    {
         this.Lot = [];
     }
 
@@ -13,8 +14,12 @@ class parkingLot{
     }
 
     doUnpark = (car) => {
+        if(this.Lot.includes(car))
+        {
         this.Lot.pop(car)
         return true;
+        }
+        return false;
     }
 }
 module.exports = new parkingLot 
