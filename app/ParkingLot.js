@@ -11,5 +11,10 @@ class parkingLot{
         this.Lot.push(car)
         return true;
     }
+
+    doUnpark = (car) => {
+        this.Lot.pop(car)
+        return true;
+    }
 }
 module.exports = new parkingLot 
