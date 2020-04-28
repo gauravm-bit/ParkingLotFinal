@@ -1,0 +1,25 @@
+{
+  "name": "parkinglotfinal",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gauravm-bit/ParkingLotFinal.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gauravm-bit/ParkingLotFinal/issues"
+  },
+  "homepage": "https://github.com/gauravm-bit/ParkingLotFinal#readme",
+  "devDependencies": {
+    "mocha": "^7.1.2"
+  }
+}

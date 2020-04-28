@@ -1,0 +1,1 @@
+console.log("welcome to parking lot problem")
