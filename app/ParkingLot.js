@@ -7,7 +7,7 @@ class parkingLot{
     doParking = (car) => {
         if(this.Lot.includes(car))
         {
-            throw new Error("Aready parked, no new spot will be alloted")
+            throw new Error("Aready parked, no new spot will be alloted");
         }
         this.Lot.push(car)
         return true;
@@ -19,7 +19,7 @@ class parkingLot{
         this.Lot.pop(car)
         return true;
         }
-        return false;
+        throw new Error("Aready unparked the car");
     }
 }
 module.exports = new parkingLot 

@@ -4,7 +4,7 @@ const parkingLot = require('../app/ParkingLot.js')
 let car = { }
 
 describe(`Testing for Parking Lot service`, () => {
-// empty parking hook before each test case
+// empty parking lot before each test case
 beforeEach(() => {
 parkingLot.Lot = [];
 })
@@ -23,7 +23,7 @@ it(`dont allow parking if already parked`, () => {
         assert.isFalse(result)
     }   
     catch(e){
-        console.log(e.message );
+        console.log(e.message);
     }
  })
 
@@ -36,8 +36,16 @@ it(`allow unparking so the driver can home`, () => {
 
 //TC 2.2 if the car is already unparked system, should not allow to unpark again
 it(`dont allow unparking if already unparked`, () => {
-    let result = parkingLot.doUnpark(car)
-    assert.isFalse(result)
+    try{
+        parkingLot.doParking(car)
+        parkingLot.doUnpark(car)
+        let result = parkingLot.doUnpark(car)
+        assert.isFalse(result)
+    }
+    catch(e)
+    {
+        console.log(e.message);
+    }
 })
 
 }) 
