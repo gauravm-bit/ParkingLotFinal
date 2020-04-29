@@ -1,6 +1,7 @@
 const assert = require('chai').assert
 const parkingLot = require('../app/ParkingLot.js')
-const owner = require('../app/Owner')
+const owner = require('../app/Owner.js')
+const airportSecurity = require('../app/AirportSecurity.js')
 
 
 let car1 = { type : 'tata'}
