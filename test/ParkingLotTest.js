@@ -1,5 +1,6 @@
 const assert = require('chai').assert
 const parkingLot = require('../app/ParkingLot.js')
+const owner = require('../app/Owner')
 
 
 let car1 = { type : 'tata'}
@@ -62,7 +63,7 @@ it(`if the lot is full put out sign`, () => {
         parkingLot.park(car2)
         parkingLot.park(car3)
         parkingLot.park(car4)
-        let result = parkingLot.ownerCheck()
+        let result =  owner.ownerFullCheck()
         assert.isTrue(result)
         }catch(e){
             console.log(e.message)
