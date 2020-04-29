@@ -55,4 +55,18 @@ it(`dont allow unparking if already unparked`, () => {
     }
 })
 
+//TC 3.1 if the lot is full owner puts out full sign
+it(`if the lot is full put out sign`, () => {
+    try{
+        parkingLot.park(car1)
+        parkingLot.park(car2)
+        parkingLot.park(car3)
+        parkingLot.park(car4)
+        let result = parkingLot.ownerCheck()
+        assert.isTrue(result)
+        }catch(e){
+            console.log(e.message)
+        }
 }) 
+
+})
