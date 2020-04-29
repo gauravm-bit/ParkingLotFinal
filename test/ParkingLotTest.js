@@ -70,4 +70,17 @@ it(`if the lot is full put out sign`, () => {
         }
 }) 
 
+//TC 4.1 if the lot is full airport personal redirects security
+it(`if the lot is full airport personal redirects security`, () => {
+    try{
+        parkingLot.park(car1)
+        parkingLot.park(car2)
+        parkingLot.park(car3)
+        parkingLot.park(car4)
+        let result =  airportSecurity.securityFullCheck()
+        assert.isTrue(result)
+        }catch(e){
+            console.log(e.message)
+        }
+}) 
 })
