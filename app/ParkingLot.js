@@ -7,7 +7,7 @@ class parkingLot{
     doParking = (car) => {
         if(this.Lot.includes(car))
         {
-            return false;
+            throw new Error("Aready parked, no new spot will be alloted")
         }
         this.Lot.push(car)
         return true;

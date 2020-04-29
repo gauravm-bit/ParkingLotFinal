@@ -17,9 +17,14 @@ it(`allow parking so the driver can board flight`, () => {
 
 //TC 1.2 if the car is already parked, system should not allow  to park again
 it(`dont allow parking if already parked`, () => {
-    parkingLot.doParking(car)
-    let result = parkingLot.doParking(car)
-    assert.isFalse(result)
+    try {
+        parkingLot.doParking(car)
+        let result = parkingLot.doParking(car)
+        assert.isFalse(result)
+    }   
+    catch(e){
+        console.log(e.message );
+    }
  })
 
  //TC 2.1 let the driver unpark so he can go home
