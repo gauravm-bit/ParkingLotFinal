@@ -55,7 +55,7 @@ class parkingLot{
        }
 
     emptySpacesPresent = () => {
-        if (this.maximumCapacity >= this.Lot.length){
+        if (this.maximumCapacity > this.Lot.length){
             return true;
         }
         return false;
