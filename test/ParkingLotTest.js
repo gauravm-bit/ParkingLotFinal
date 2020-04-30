@@ -90,7 +90,6 @@ it(`if the lot is not full owner removes the full sign` , () => {
     parkingLot.park(car5)
     parkingLot.park(car3)
     parkingLot.park(car1)
-    //let result = owner.emptySpacesCheck()
     let result = parkingLot.emptySpacesPresent()
     assert.isTrue(result)
 })
