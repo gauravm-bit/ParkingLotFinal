@@ -73,7 +73,7 @@ it(`if the lot is full put out sign`, () => {
 
 //TC 4.1 if the lot is full airport personal redirects security
 it(`if the lot is full airport personal redirects security`, () => {
-    try{
+   try{
         parkingLot.park(car1)
         parkingLot.park(car2)
         parkingLot.park(car3)
@@ -84,4 +84,15 @@ it(`if the lot is full airport personal redirects security`, () => {
             console.log(e.message)
         }
 }) 
+
+//TC 5.1 if the lot is not full owner removes the full sign from outside
+it(`if the lot is not full owner removes the full sign` , () => {
+    parkingLot.park(car5)
+    parkingLot.park(car3)
+    parkingLot.park(car1)
+    //let result = owner.emptySpacesCheck()
+    let result = parkingLot.emptySpacesPresent()
+    assert.isTrue(result)
+})
+
 })

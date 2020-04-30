@@ -5,7 +5,7 @@ class parkingLot{
         this.maximumCapacity = 4;
     }
 
-   park = (car) => {
+    park = (car) => {
         if (this.isEmpty()) {
              this.Lot.push(car)
              return true
@@ -25,7 +25,7 @@ class parkingLot{
          }
      }
 
-     unpark = (car) =>{
+    unpark = (car) =>{
         if(this.isEmpty()){
             throw new Error("Parking lot is empty");
         }
@@ -49,6 +49,13 @@ class parkingLot{
 
     isEmpty = () => { 
         if (this.Lot.length == 0){
+            return true;
+        }
+        return false;
+       }
+
+    emptySpacesPresent = () => {
+        if (this.Lot.length <= this.maximumCapacity){
             return true;
         }
         return false;
