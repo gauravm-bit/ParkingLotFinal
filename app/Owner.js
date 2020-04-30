@@ -8,8 +8,6 @@ class owner {
         return false
      }
 
-    
-    
     emptySpacesCheck = () => {    
          if(parkingLot.emptySpacesPresent()){
              return true

@@ -93,4 +93,14 @@ it(`if the lot is not full owner removes the full sign` , () => {
     expect(owner.emptySpacesCheck.returned(true))
 })
 
+//TC 6.1 making the parking lot attendant to park the car 
+it(`make the parking lot attendant to park the car so that`, () => {
+    parkingLot.park(car1)
+    parkingLot.park(car2)
+
+    sinon.spy(owner,"attendantPark")
+    expect(owner.attendantPark(car3).returned(true))
+    
+})
+
 })
