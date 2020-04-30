@@ -1,5 +1,6 @@
 const assert = require('chai').assert
-const expect = require('chai').expect;
+const expect = require('chai').expect
+const sinon = require('sinon');
 
 const parkingLot = require('../app/ParkingLot.js')
 const owner = require('../app/Owner.js')
@@ -60,30 +61,25 @@ it(`dont allow unparking if already unparked`, () => {
 
 //TC 3.1 if the lot is full owner puts out full sign
 it(`if the lot is full put out sign`, () => {
-   try{
         parkingLot.park(car1)
         parkingLot.park(car2)
         parkingLot.park(car3)
         parkingLot.park(car4)
-        let result =  owner.ownerFullCheck()
+        let result = owner.ownerFullCheck();
         expect(result).to.eql(true)
-        }catch(e){
-            console.log(e.message)
-        }
 }) 
 
 //TC 4.1 if the lot is full airport personal redirects security
 it(`if the lot is full airport personal redirects security`, () => {
-    try{
         parkingLot.park(car1)
         parkingLot.park(car2)
         parkingLot.park(car3)
         parkingLot.park(car4)
-        let result =  airportSecurity.securityFullCheck()
-        expect(result).to.eql(true)
-        }catch(e){
-            console.log(e.message)
-        }
+        
+        sinon.spy(airportSecurity,"securityFullCheck")
+        airportSecurity.securityFullCheck()
+        expect(airportSecurity.securityFullCheck.returned(true))
+         
 }) 
 
 //TC 5.1 if the lot is not full owner removes the full sign from outside
@@ -91,8 +87,10 @@ it(`if the lot is not full owner removes the full sign` , () => {
     parkingLot.park(car5)
     parkingLot.park(car3)
     parkingLot.park(car1)
-    let result = owner.emptySpacesCheck()
-    expect(result).to.eql(true)
+
+    sinon.spy(owner,"emptySpacesCheck")
+    owner.emptySpacesCheck()
+    expect(owner.emptySpacesCheck.returned(true))
 })
 
 })
