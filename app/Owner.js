@@ -14,6 +14,17 @@ class owner {
          } 
          return false
     }
+    
+    attendantPark = (car) => {
+        if(this.emptySpacesCheck()){
+            parkingLot.park(car)
+            return true
+        }
+        else{
+            throw new Error("Parking lot is full");
+        }
+    }
+
 
     }
 

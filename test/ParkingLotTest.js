@@ -22,7 +22,7 @@ parkingLot.Lot = [];
 it(`allow parking so the driver can board flight`, () => {
      let result = parkingLot.park(car1);
      expect(result).to.eql(true)
-    })
+ })
 
 //TC 1.2 if the car is already parked, system should not allow  to park again
 it(`dont allow parking if already parked`, () => {
@@ -79,7 +79,6 @@ it(`if the lot is full airport personal redirects security`, () => {
         sinon.spy(airportSecurity,"securityFullCheck")
         airportSecurity.securityFullCheck()
         expect(airportSecurity.securityFullCheck.returned(true))
-         
 }) 
 
 //TC 5.1 if the lot is not full owner removes the full sign from outside
@@ -95,12 +94,18 @@ it(`if the lot is not full owner removes the full sign` , () => {
 
 //TC 6.1 making the parking lot attendant to park the car 
 it(`make the parking lot attendant to park the car so that`, () => {
-    parkingLot.park(car1)
-    parkingLot.park(car2)
-
+try{ 
+     parkingLot.park(car1)
+     parkingLot.park(car2)
+     owner.attendantPark(car3)
+     
     sinon.spy(owner,"attendantPark")
-    expect(owner.attendantPark(car3).returned(true))
-    
+    expect(owner.attendantPark.returned(true))
+    }
+    catch(e)
+    {
+        console.log(e.message)
+    }
 })
 
 })
