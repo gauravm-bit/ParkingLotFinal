@@ -61,6 +61,12 @@ class parkingLot{
         return false;
        }
 
-  
+    findCar = (car) => {
+        var found = this.Lot.some(element => element.type == car.type)
+        if (found) {
+            return true
+        }
+        throw new Error("Car is not present in the Lot");
+    }
 }
 module.exports = new parkingLot 
