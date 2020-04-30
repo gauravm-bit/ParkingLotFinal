@@ -108,4 +108,22 @@ try{
     }
 })
 
+//TC 7.1 find the car of the driver so that he can go home
+it(`find the car so that driver can go home`, () => {
+    try{
+        parkingLot.park(car1)
+        parkingLot.park(car4)
+        parkingLot.park(car5)
+        parkingLot.findCar(car4)
+
+        sinon.spy(parkingLot,"findCar")
+        expect(parkingLot.findCar.returned(true))
+    }
+    catch(e)
+    {
+        console.log(e.message)
+    }
+})
+
+
 })

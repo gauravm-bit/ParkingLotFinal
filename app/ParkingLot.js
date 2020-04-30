@@ -60,5 +60,7 @@ class parkingLot{
         }
         return false;
        }
+
+  
 }
 module.exports = new parkingLot 
