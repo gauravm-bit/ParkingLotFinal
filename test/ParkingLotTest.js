@@ -125,5 +125,18 @@ it(`find the car so that driver can go home`, () => {
     }
 })
 
+//TC 7.2 if car is not found throw an error stating car is not present
+it(`if the car is not present give a message`, () => {
+    try{
+        parkingLot.findCar(car4)
+
+        sinon.spy(parkingLot,"findCar")
+        expect(parkingLot.findCar.returned(true))
+    }
+    catch(e)
+    {
+        console.log(e.message)
+    }
+})
 
 })
