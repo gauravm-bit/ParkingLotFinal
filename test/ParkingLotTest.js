@@ -11,6 +11,7 @@ let car2 = { type : 'ford'}
 let car3 = { type : 'maruti'}
 let car4 = { type : 'mitsubishi'}
 let car5 = { type : 'honda'}
+let car6,car7,car8;
 
 describe(`Testing for Parking Lot service`, () => {
 // empty parking lot before each test case
@@ -79,6 +80,7 @@ it(`if the lot is full airport personal redirects security`, () => {
         sinon.spy(airportSecurity,"securityFullCheck")
         airportSecurity.securityFullCheck()
         expect(airportSecurity.securityFullCheck.returned(true))
+        airportSecurity.securityFullCheck.restore()
 }) 
 
 //TC 5.1 if the lot is not full owner removes the full sign from outside
@@ -90,6 +92,7 @@ it(`if the lot is not full owner removes the full sign` , () => {
     sinon.spy(owner,"emptySpacesCheck")
     owner.emptySpacesCheck()
     expect(owner.emptySpacesCheck.returned(true))
+    owner.emptySpacesCheck.restore()
 })
 
 //TC 6.1 making the parking lot attendant to park the car 
@@ -106,6 +109,7 @@ try{
     {
         console.log(e.message)
     }
+    owner.attendantPark.restore()
 })
 
 //TC 7.1 find the car of the driver so that he can go home
@@ -115,19 +119,24 @@ it(`find the car so that driver can go home`, () => {
         parkingLot.park(car4)
         parkingLot.park(car5)
         parkingLot.findCar(car4)
+        
 
         sinon.spy(parkingLot,"findCar")
         expect(parkingLot.findCar.returned(true))
+        
+        
     }
     catch(e)
     {
         console.log(e.message)
     }
+    parkingLot.findCar.restore()
 })
 
 //TC 7.2 if car is not found throw an error stating car is not present
 it(`if the car is not present give a message`, () => {
     try{
+
         parkingLot.findCar(car4)
 
         sinon.spy(parkingLot,"findCar")
@@ -137,6 +146,20 @@ it(`if the car is not present give a message`, () => {
     {
         console.log(e.message)
     }
+   
+})
+
+//TC 8.1 adding a car with timestamp so that they can be charged
+it(`adding a car with a timestamp `, () => {
+    let car6 = {type : 'camry',Time:Date()}
+    let car7 = {type : 'masserati',Time:Date()}
+    parkingLot.park(car6)
+    parkingLot.park(car7)
+
+    let result = parkingLot.findCar(car6)
+    expect(result).to.be.true
+    console.log("Time of car 6 is " +car6.Time)
+     
 })
 
 })
