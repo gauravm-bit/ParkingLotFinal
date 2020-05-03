@@ -30,11 +30,11 @@ it(`dont allow parking if already parked`, () => {
    try {
         parkingLot.park(car1)
         parkingLot.park(car2)
-        let result = parkingLot.park(car1)
-        expect(result).to.not.eql(true)
+        parkingLot.park(car1)
+        
     }   
     catch(e){
-        console.log(e.message);
+        expect(e.message).to.eql("Aready parked,no new spot will be alloted");
     }
  })
 
@@ -51,12 +51,14 @@ it(`dont allow unparking if already unparked`, () => {
         parkingLot.park(car4)
         parkingLot.park(car1)
         parkingLot.unpark(car4)
-        let result = parkingLot.unpark(car4)
-        assert.isFalse(result)
+        parkingLot.unpark(car4)
+        
     }
     catch(e)
     {
-        console.log(e.message);
+        expect(e.message).to.eql("Aready unparked the car");
+
+         (e.message);
     }
 })
 
@@ -98,53 +100,41 @@ it(`if the lot is not full owner removes the full sign` , () => {
 //TC 6.1 making the parking lot attendant to park the car 
 it(`make the parking lot attendant to park the car so that`, () => {
 try{ 
+    sinon.spy(owner,"attendantPark") 
      parkingLot.park(car1)
      parkingLot.park(car2)
      owner.attendantPark(car3)
-     
-    sinon.spy(owner,"attendantPark")
-    expect(owner.attendantPark.returned(true))
-    }
+     owner.attendantPark(car4)
+     owner.attendantPark(car5)
+     }
     catch(e)
     {
-        console.log(e.message)
+        owner.attendantPark.threw("Parking lot is full");    
     }
-    owner.attendantPark.restore()
 })
 
 //TC 7.1 find the car of the driver so that he can go home
 it(`find the car so that driver can go home`, () => {
-    try{
+    
+        sinon.spy(parkingLot,"findCar")
         parkingLot.park(car1)
         parkingLot.park(car4)
         parkingLot.park(car5)
         parkingLot.findCar(car4)
         
-
-        sinon.spy(parkingLot,"findCar")
         expect(parkingLot.findCar.returned(true))
-        
-        
-    }
-    catch(e)
-    {
-        console.log(e.message)
-    }
-    parkingLot.findCar.restore()
+        parkingLot.findCar.restore()
 })
 
 //TC 7.2 if car is not found throw an error stating car is not present
 it(`if the car is not present give a message`, () => {
     try{
-
-        parkingLot.findCar(car4)
-
         sinon.spy(parkingLot,"findCar")
-        expect(parkingLot.findCar.returned(true))
+        parkingLot.findCar(car4)
     }
     catch(e)
     {
-        console.log(e.message)
+         parkingLot.findCar.threw("Car is not present in the Lot")
     }
    
 })
@@ -158,7 +148,7 @@ it(`adding a car with a timestamp `, () => {
 
     let result = parkingLot.findCar(car6)
     expect(result).to.be.true
-    console.log("Time of car 6 is " +car6.Time)
+     
      
 })
 
