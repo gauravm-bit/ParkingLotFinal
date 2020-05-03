@@ -5,7 +5,6 @@ class airportSecurity {
         if(parkingLot.isFull()){
             return true
         }
-        return false
     }
 }
 module.exports = new airportSecurity

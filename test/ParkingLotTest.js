@@ -24,13 +24,13 @@ parkingLot.Lot = [];
 })
 
 //TC 1.1 let the driver park the car so that he can board his flight
-it(`allow parking so the driver can board flight`, () => {
+it(`given car when parked should return parked`, () => {
      let result = parkingLot.park(car4);
      expect(result).to.eql(true)
  })
 
 //TC 1.2 if the car is already parked, system should not allow  to park again
-it(`dont allow parking if already parked`, () => {
+it(`given car when already parked should throw an exception`, () => {
    try {
            parkingLot.park(car4)
            parkingLot.park(car4) 
@@ -40,15 +40,27 @@ it(`dont allow parking if already parked`, () => {
     }
  })
 
+ //TC 1.3 if the lot is full throw an error
+ it(`given car when already parked should throw an exception`, () => {
+    try {
+            car.forEach(parkingLot.park)
+            parkingLot.park(car4)
+            parkingLot.park(car5) 
+     }   
+     catch(e){
+         expect(e.message).to.eql("Parking lot is full");
+     }
+  })
+
  //TC 2.1 let the driver unpark so he can go home
-it(`allow unparking so the driver can home`, () => {
+it(`given car when unparked should be removed from the lot`, () => {
     parkingLot.park(car4)
     let result = parkingLot.unpark(car4)
     expect(result).to.eql(true)
 })
 
 //TC 2.2 if the car is already unparked system, should not allow to unpark again
-it(`dont allow unparking if already unparked`, () => {
+it(`given car when already unparked should throw an exception`, () => {
    try{
         car.forEach(parkingLot.park)
         parkingLot.unpark(car1)
@@ -62,7 +74,7 @@ it(`dont allow unparking if already unparked`, () => {
 })
 
 //TC 3.1 if the lot is full owner puts out full sign
-it(`if the lot is full put out sign`, () => {
+it(`given parking lot if full should return true`, () => {
         car.forEach(parkingLot.park)
         parkingLot.park(car4)
         let result = owner.ownerFullCheck();
@@ -70,7 +82,7 @@ it(`if the lot is full put out sign`, () => {
 }) 
 
 //TC 4.1 if the lot is full airport personal redirects security
-it(`if the lot is full airport personal redirects security`, () => {
+it(`given parkinglot if full should return true`, () => {
         car.forEach(parkingLot.park)
         parkingLot.park(car4)
         

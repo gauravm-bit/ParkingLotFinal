@@ -4,15 +4,13 @@ class owner {
     ownerFullCheck = () => {
         if(parkingLot.isFull()){
             return true
-        }
-        return false
+        } 
      }
 
     emptySpacesCheck = () => {    
          if(parkingLot.emptySpacesPresent()){
              return true
-         } 
-         return false
+         }
     }
     
     attendantPark = (car) => {

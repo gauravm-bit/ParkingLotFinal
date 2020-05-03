@@ -25,9 +25,6 @@ class parkingLot{
      }
 
     unpark = (car) =>{
-        if(this.isEmpty()){
-            throw new Error("Parking lot is empty");
-        }
         if (this.search(car)) {
             let index = this.Lot.indexOf(car)
             this.Lot.splice(index,1)
