@@ -138,6 +138,7 @@ it(`given car when not found should throw exception`, () => {
     {
          parkingLot.findCar.threw("Car is not present in the Lot")
     } 
+    parkingLot.findCar.restore()
 })
 
 //TC 8.1 adding a car with timestamp so that they can be charged
@@ -145,6 +146,20 @@ it(`given car with a timestamp when found should return true`, () => {
     cars.forEach(parkingLot.park)
     let result = parkingLot.findCar(car6)
     expect(result).to.be.true
+})
+
+//TC 9.1 evenlydirect cars into lots
+it(`given cars when parked should park evenly in separate lots`, () => {
+    cars.forEach(parkingLot.park)
+    try{
+        sinon.spy(parkingLot,"findCar")
+        parkingLot.findCar(car4)
+    }
+    catch(e)
+    {
+         parkingLot.findCar.threw("Car is not present in the Lot")
+    } 
+    parkingLot.findCar.restore()
 })
 
 })
