@@ -8,7 +8,12 @@ const airportSecurity = require('../app/AirportSecurity.js')
 let car =   [   car1 = { type : 'tata'},
                 car2 = { type : 'ford'},
                 car3 = { type : 'maruti'},
+                car8 = { type : 'suzuki'},
+                car9 = { type : 'wolkswagon'},
+                car10 = { type : 'toyota'},
+                car11 = { type : 'audi'}
             ]
+
 let car4 = { type : 'mitsubishi'}
 let car5 = { type : 'honda'} 
 let cars =  [
@@ -20,8 +25,9 @@ let cars =  [
 describe(`Testing for Parking Lot service`, () => {
 // empty parking lot before each test case
 beforeEach(() => {
-parkingLot.Lot = [];
-})
+parkingLot.Lot1 = [];
+parkingLot.Lot2 = [];
+ })
 
 //TC 1.1 let the driver park the car so that he can board his flight
 it(`given car when parked should return parked`, () => {
@@ -41,7 +47,7 @@ it(`given car when already parked should throw an exception`, () => {
  })
 
  //TC 1.3 if the lot is full throw an error
- it(`given car when already parked should throw an exception`, () => {
+ it(`given parkingLot when full should throw an exception`, () => {
     try {
             car.forEach(parkingLot.park)
             parkingLot.park(car4)
@@ -56,7 +62,7 @@ it(`given car when already parked should throw an exception`, () => {
 it(`given car when unparked should be removed from the lot`, () => {
     parkingLot.park(car4)
     let result = parkingLot.unpark(car4)
-    expect(result).to.eql(true)
+     expect(result).to.eql(true)
 })
 
 //TC 2.2 if the car is already unparked system, should not allow to unpark again
@@ -74,11 +80,12 @@ it(`given car when already unparked should throw an exception`, () => {
 })
 
 //TC 3.1 if the lot is full owner puts out full sign
-it(`given parking lot if full should return true`, () => {
+it(`given parking lot if full should return true and owner should put sign`, () => {
         car.forEach(parkingLot.park)
         parkingLot.park(car4)
         let result = owner.ownerFullCheck();
         expect(result).to.eql(true)
+        
 }) 
 
 //TC 4.1 if the lot is full airport personal redirects security

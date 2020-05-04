@@ -2,15 +2,16 @@ const parkingLot = require('../app/ParkingLot.js')
 class owner {
     
     ownerFullCheck = () => {
-        if(parkingLot.isFull())
+        if(parkingLot.isFull()){
             return true
-
+        }
      }
 
     emptySpacesCheck = () => {    
          if(parkingLot.emptySpacesPresent()){
              return true
          }
+         return false
     }
     
     attendantPark = (car) => {
