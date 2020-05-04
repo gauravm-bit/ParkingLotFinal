@@ -81,27 +81,5 @@ class parkingLot{
         }
         return false
      }
-
-
-    
-    // found2 = (car) => { 
-    //     if(this.Lot2.some(element => element.type == car.type)){
-    //     return true
-    // }
-    //     retrun false
-    // }
-
-    
-    
-        // search = (car) => {
-    //     if(this.Lot.some(element => element.type == car.type)
-    //         ||
-    //         this.Lot1.some(element => element.type == car.type))
-    //         {
-    //         return true
-    //     }
-    //     return false  
-    // }
-    
 }
 module.exports = new parkingLot 
