@@ -16,19 +16,32 @@ class parkingLot{
              if (this.found1(car) || this.found2(car)) {
                 throw new Error("Aready parked,no new spot will be alloted");
              }
-             else {
-                 if(count % 2 == 0){
-                 this.Lot1.push(car)
-                 count++
-                 }
-                 else{
-                     this.Lot2.push(car)
-                     count++
-                 }
-                 return true
-              }
-         }
-     }
+             else { 
+                    if(driver == 'handicap')
+                    {
+                        if(this.Lot1.length < this.maximumCapacity/2)
+                        {
+                            this.Lot1.push(car)
+                        }
+                        else if(this.Lot2.length < this.maximumCapacity/2)
+                        {
+                           this.Lot2.push(car)
+                       } 
+                    }
+                    else{
+                    if(count % 2 == 0){
+                    this.Lot1.push(car)
+                    count++
+                    }
+                    else{
+                        this.Lot2.push(car)
+                        count++
+                    }
+                    return true
+                    }
+                }
+            }
+        }
 
     unpark = (car) => {
         if (this.found1(car)) {
