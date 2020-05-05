@@ -56,7 +56,7 @@ class parkingLot{
             throw new Error("Aready unparked the car");
         }
     }
-
+    
     isFull = () => {
         if (this.Lot1.length == this.maximumCapacity && this.Lot2.length == this.maximumCapacity) {
             return true

@@ -13,6 +13,10 @@ let car =   [   car1 = { type : 'tata'},
                 car10 = { type : 'toyota'},
                 car11 = { type : 'audi'}
             ]
+let vehicles = [
+                  car12 = { type : 'porche', driver: 'normal', size : 'large'},
+                  car13 = { type : 'alfaRomeo',driver: 'normal',size :'large'},
+               ]
 
 let car4 = { type : 'mitsubishi'}
 let car5 = { type : 'honda'} 
@@ -181,4 +185,17 @@ it(`given car of handicap driver if parked should be parked at nearest place`, (
 
 })
 
+//TC 11.1 park large vehicles in lot with more free space
+it(`given car when is large should be alloted to lot less full`, () =>{
+    parkingLot.Lot1.push(car1)
+    parkingLot.Lot2.push(car2)
+    parkingLot.park(car12)
+    parkingLot.park(car13)
+    
+    let result = parkingLot.findCar(car12)
+    expect(result).to.be.true
+
 })
+
+})
+
