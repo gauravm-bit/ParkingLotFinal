@@ -155,7 +155,7 @@ it(`given car with a timestamp when found should return true`, () => {
     expect(result).to.be.true
 })
 
-//TC 9.1 evenlydirect cars into lots
+//TC 9.1 evenly direct cars into lots
 it(`given cars when parked should park evenly in separate lots`, () => {
     cars.forEach(parkingLot.park)
     try{
@@ -167,6 +167,18 @@ it(`given cars when parked should park evenly in separate lots`, () => {
          parkingLot.findCar.threw("Car is not present in the Lot")
     } 
     parkingLot.findCar.restore()
+})
+
+//TC 10.1 handicap driver park
+it(`given car of handicap driver if parked should be parked at nearest place`, () =>{
+    parkingLot.Lot1.push(car1,'normal')
+    parkingLot.Lot1.push(car2,'normal')
+    parkingLot.park(car3,'handicap')
+    parkingLot.park(car4,'handicap')
+   
+    let result = parkingLot.findCar(car3)
+    expect(result).to.be.true
+
 })
 
 })

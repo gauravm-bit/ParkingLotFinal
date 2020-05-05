@@ -8,7 +8,7 @@ class parkingLot{
         this.maximumCapacity = 4;
     }
 
-    park = (car) => {
+    park = (car,driver) => {
          if(this.isFull()) {
             throw new Error("Parking lot is full");
         }
@@ -20,13 +20,12 @@ class parkingLot{
                  if(count % 2 == 0){
                  this.Lot1.push(car)
                  count++
-                 return true
                  }
                  else{
                      this.Lot2.push(car)
                      count++
-                     return true
                  }
+                 return true
               }
          }
      }
