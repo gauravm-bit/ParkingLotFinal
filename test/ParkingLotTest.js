@@ -12,10 +12,10 @@ let car = {name:"maruti",driverType:driver.NORMAL}
 let car1 = {name:"maruti",driverType:driver.HADNICAP}
 
 
-let cars =  [ {name:"maruti",driverType:driver.NORMAL},
-              {name:"bmw",driverType:driver.NORMAL},
-              {name:"benz",driverType:driver.NORMAL},
-              {name:"ford",driverType:driver.NORMAL}
+let cars =  [ {name:"maruti",driverType:driver.NORMAL,color:'blue',number:'1234'},
+              {name:"bmw",driverType:driver.NORMAL,color:'white',number:'8989'},
+              {name:"benz",driverType:driver.NORMAL,color:'silver',number:'23423'},
+              {name:"ford",driverType:driver.NORMAL,color:'white',number:'7896'}
             ]           
 
 describe(`Testing for Parking Lot service`, () => {
@@ -131,7 +131,7 @@ it(`given cars when parked should park evenly in separate lots`, () => {
 //TC 10.1 handicap driver park
 it(`given car of handicap driver if parked should be parked at nearest place`, () =>{
     let newLot = new parkingLot
-    let result = parkingAttendent.AttendantPark(car1)  
+    let result = newLot.park(car1)  
     expect(result).to.be.true
 })
 
@@ -142,5 +142,14 @@ it(`given car when is large should be alloted to lot less full`, () =>{
     let result = newLot.park(car3)
     expect(result).to.be.true
 })
+
+//TC 12.1 Police department knows the location of parked white cars
+it(`given parked cars if white the location should be returned`, () =>{
+    let newLot = new parkingLot(2,2,4)
+    cars.forEach(newLot.park)
+    let RequiredParameter = newLot.getInfo('white')
+    expect(carProperty[0][0]).to.eql('gaurav');
+
+}) 
 
 })

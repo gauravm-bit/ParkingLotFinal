@@ -39,8 +39,6 @@ class parkingLot {
         return true;
     }
             
-     
-
     unpark = (car) => {
         for (let lot = 0; lot < this.parkingLot.length; lot++) {
             for (let slot = 0; slot < this.parkingLot[lot].length; slot++) {
@@ -83,13 +81,16 @@ class parkingLot {
     }
 
     findHandicapSlot = (car) => {
-        for (let lot = 0; lot < this.parkingLot.length; lot++) {
-            for (let slot = 0; slot < this.parkingLot[lot].length; slot++) {
+        for (let lot = 0; lot < this.parkingLot.length/2; lot++) {
+            for (let slot = 0; slot < this.parkingLot[lot].length/2; slot++) {
                 if (this.parkingLot[lot][slot] === null) {
                     this.parkingLot[lot][slot] = car;
                     this.carCount++;
                     this.isFull();
                     return true;
+                }
+                else{
+                    throw new Error('No handicap spots left')
                 }
             }
         }
@@ -129,6 +130,9 @@ class parkingLot {
             }
         }
     }
+
+    
+
  
     
 
