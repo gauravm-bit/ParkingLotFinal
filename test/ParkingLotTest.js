@@ -1,201 +1,146 @@
 const assert = require('chai').assert
 const expect = require('chai').expect
 const sinon = require('sinon');
+const driver = require('../app/DriverType')
+const carType = require('../app/CarType');
 
+const parkingAttendent = require('../app/ParkingLotAttendant.js');
 const parkingLot = require('../app/ParkingLot.js')
 const owner = require('../app/Owner.js')
 const airportSecurity = require('../app/AirportSecurity.js')
-let car =   [   car1 = { type : 'tata'},
-                car2 = { type : 'ford'},
-                car3 = { type : 'maruti'},
-                car8 = { type : 'suzuki'},
-                car9 = { type : 'wolkswagon'},
-                car10 = { type : 'toyota'},
-                car11 = { type : 'audi'}
-            ]
-let vehicles = [
-                  car12 = { type : 'porche', driver: 'normal', size : 'large'},
-                  car13 = { type : 'alfaRomeo',driver: 'normal',size :'large'},
-               ]
+let car = {name:"maruti",driverType:driver.NORMAL}
+let car1 = {name:"maruti",driverType:driver.HADNICAP}
 
-let car4 = { type : 'mitsubishi'}
-let car5 = { type : 'honda'} 
-let cars =  [
-                car6 = {type : 'camry',Time:Date()},
-                car7 = {type : 'masserati',Time:Date()}
-            ]
 
+let cars =  [ {name:"maruti",driverType:driver.NORMAL},
+              {name:"bmw",driverType:driver.NORMAL},
+              {name:"benz",driverType:driver.NORMAL},
+              {name:"ford",driverType:driver.NORMAL}
+            ]           
 
 describe(`Testing for Parking Lot service`, () => {
-// empty parking lot before each test case
-beforeEach(() => {
-parkingLot.Lot1 = [];
-parkingLot.Lot2 = [];
- })
 
 //TC 1.1 let the driver park the car so that he can board his flight
 it(`given car when parked should return parked`, () => {
-     let result = parkingLot.park(car4);
-     expect(result).to.eql(true)
+     let newLot = new parkingLot(1,1,2)
+     let result = newLot.park(car)
+     expect(result).to.be.equal(true);
  })
 
-//TC 1.2 if the car is already parked, system should not allow  to park again
-it(`given car when already parked should throw an exception`, () => {
+//TC 1.2 car is not an object
+it(`given car when not an object should throw an exception`, () => {
+    let newLot = new parkingLot(1,1,2)
    try {
-           parkingLot.park(car4)
-           parkingLot.park(car4) 
+          newLot.park(null)   
     }   
     catch(e){
-        expect(e.message).to.eql("Aready parked,no new spot will be alloted");
+        expect(e.message).to.eql('car must be an object and cannot be null');
     }
  })
 
- //TC 1.3 if the lot is full throw an error
- it(`given parkingLot when full should throw an exception`, () => {
-    try {
-            car.forEach(parkingLot.park)
-            parkingLot.park(car4)
-            parkingLot.park(car5) 
-     }   
-     catch(e){
-         expect(e.message).to.eql("Parking lot is full");
-     }
-  })
-
+ 
  //TC 2.1 let the driver unpark so he can go home
-it(`given car when unparked should be removed from the lot`, () => {
-    parkingLot.park(car4)
-    let result = parkingLot.unpark(car4)
-     expect(result).to.eql(true)
+it(`given car when unparked should return true`, () => {
+
+    let newLot = new parkingLot(1,1,2)
+    newLot.park(car)
+    let result = newLot.unpark(car)
+    expect(result).to.be.equal(true);  
 })
 
 //TC 2.2 if the car is already unparked system, should not allow to unpark again
 it(`given car when already unparked should throw an exception`, () => {
    try{
-        car.forEach(parkingLot.park)
-        parkingLot.unpark(car1)
-        parkingLot.unpark(car1)
+        let newLot = new parkingLot(1,1,2)
+        newLot.unpark(car)
+        newLot.unpark(car)
+        console.log(newLot)
                
     }
     catch(e)
     {
-       expect(e.message).to.eql("Aready unparked the car");
+       expect(e.message).to.eql('Aready unparked the car');
     }
 })
 
 //TC 3.1 if the lot is full owner puts out full sign
 it(`given parking lot if full should return true and owner should put sign`, () => {
-        car.forEach(parkingLot.park)
-        parkingLot.park(car4)
-        let result = owner.ownerFullCheck();
-        expect(result).to.eql(true)
-        
-}) 
-
-//TC 4.1 if the lot is full airport personal redirects security
-it(`given parkinglot if full should return true`, () => {
-        car.forEach(parkingLot.park)
-        parkingLot.park(car4)
-        
-        sinon.spy(airportSecurity,"securityFullCheck")
-        airportSecurity.securityFullCheck()
-        expect(airportSecurity.securityFullCheck.returned(true))
-        airportSecurity.securityFullCheck.restore()
+      try{  
+        let newLot = new parkingLot(2,2,4)
+        cars.forEach(newLot.park)
+      } catch (e){
+        expect(e.message).to.eql('Parking lot is full')
+      }       
 }) 
 
 //TC 5.1 if the lot is not full owner removes the full sign from outside
-it(`given parking lot if not full should remove  ` , () => {
-    car.forEach(parkingLot.park)
-     
-    sinon.spy(owner,"emptySpacesCheck")
-    owner.emptySpacesCheck()
-    expect(owner.emptySpacesCheck.returned(true))
+it(`given parking lot if not full should give message ` , () => {
+    try{
+        let newLot = new parkingLot(2,2,4);
+        newLot.park(car)
+        sinon.spy(owner,"emptySpacesCheck")
+    }
+    catch{
+        owner.emptySpacesCheck.threw('Parking lot has space again')
+    }
     owner.emptySpacesCheck.restore()
 })
 
 //TC 6.1 making the parking lot attendant to park the car 
 it(`given car when parked by attendant should return parked`, () => {
-try{ 
-    sinon.spy(owner,"attendantPark") 
-     
-    car.forEach(parkingLot.park)
-    owner.attendantPark(car4)
-    owner.attendantPark(car5)
-    }
-    catch(e)
-    {
-        owner.attendantPark.threw("Parking lot is full");    
-    }
+    let result = parkingAttendent.AttendantPark(car)
+    expect(result).to.eql(true);
+
 })
 
 //TC 7.1 find the car of the driver so that he can go home
-it(`given car when searched should return found`, () => {
-    
-        sinon.spy(parkingLot,"findCar")
-        car.forEach(parkingLot.park)
-        parkingLot.findCar(car3)
-        
-        expect(parkingLot.findCar.returned(true))
-        parkingLot.findCar.restore()
+it(`given car when searched should return true`, () => {
+    let newLot = new parkingLot(1,1,2)
+    sinon.spy(newLot,"findCar")
+    newLot.park(car)
+    expect(newLot.findCar.returned(true))
+    newLot.findCar.restore()
 })
 
 //TC 7.2 if car is not found throw an error stating car is not present
 it(`given car when not found should throw exception`, () => {
-    try{
-        sinon.spy(parkingLot,"findCar")
-        parkingLot.findCar(car4)
-    }
-    catch(e)
-    {
-         parkingLot.findCar.threw("Car is not present in the Lot")
-    } 
-    parkingLot.findCar.restore()
+   try{
+    let newLot = new parkingLot(1,1,2)
+    newLot.findCar(car)
+   }
+   catch(e){
+    expect(e.message).to.eql('Car is not present in the Lot')
+   }          
 })
 
 //TC 8.1 adding a car with timestamp so that they can be charged
 it(`given car with a timestamp when found should return true`, () => {
-    cars.forEach(parkingLot.park)
-    let result = parkingLot.findCar(car6)
+    let newLot = new parkingLot(1,1,2)
+    newLot.park(car)
+    let result = newLot.findCar(car)
     expect(result).to.be.true
 })
 
 //TC 9.1 evenly direct cars into lots
 it(`given cars when parked should park evenly in separate lots`, () => {
-    cars.forEach(parkingLot.park)
-    try{
-        sinon.spy(parkingLot,"findCar")
-        parkingLot.findCar(car4)
-    }
-    catch(e)
-    {
-         parkingLot.findCar.threw("Car is not present in the Lot")
-    } 
-    parkingLot.findCar.restore()
+    //  let newLot = new parkingLot;
+     let result = parkingAttendent.AttendantPark(car)
+     expect(result).to.eql(true);
 })
 
 //TC 10.1 handicap driver park
 it(`given car of handicap driver if parked should be parked at nearest place`, () =>{
-    parkingLot.Lot1.push(car1,'normal')
-    parkingLot.Lot1.push(car2,'normal')
-    parkingLot.park(car3,'handicap')
-    parkingLot.park(car4,'handicap')
-   
-    let result = parkingLot.findCar(car3)
+    let newLot = new parkingLot
+    let result = parkingAttendent.AttendantPark(car1)  
     expect(result).to.be.true
-
 })
 
 //TC 11.1 park large vehicles in lot with more free space
 it(`given car when is large should be alloted to lot less full`, () =>{
-    parkingLot.Lot1.push(car1)
-    parkingLot.Lot2.push(car2)
-    parkingLot.park(car12)
-    parkingLot.park(car13)
-    
-    let result = parkingLot.findCar(car12)
+    let newLot = new parkingLot(2,2,4);
+    let car3 = {name:"Rover",type:carType.LARGE}
+    let result = newLot.park(car3)
     expect(result).to.be.true
-
 })
 
 })
-

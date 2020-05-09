@@ -1,97 +1,136 @@
-let count = 0;
-class parkingLot{
-    
-    constructor()
-    {
-        this.Lot1 = [];
-        this.Lot2 = [];
-        this.maximumCapacity = 4;
+const owner = require('../app/Owner')
+const airportSecurity = require('../app/AirportSecurity')
+class parkingLot {
+
+    constructor(numberOfLots, capacityOfEveryLot, capacityOfParkingLot) {
+        this.parkingLot;
+        this.ParkingLotStructure(numberOfLots, capacityOfEveryLot)
+        this.capacityOfParkingLot = capacityOfParkingLot;
+        this.carCount = 0;
     }
 
-    park = (car,driver) => {
-         if(this.isFull()) {
-            throw new Error("Parking lot is full");
+    ParkingLotStructure = (numberOfLots, capacityOfEveryLot) => {
+        this.parkingLot = [];
+        for (let lot = 0; lot < numberOfLots; lot++) {
+            this.parkingLot[lot] = [capacityOfEveryLot];
+            for (let slot = 0; slot < capacityOfEveryLot; slot++) {
+                this.parkingLot[lot][slot] = null;
+            }
         }
-        else {
-             if (this.found1(car) || this.found2(car)) {
-                throw new Error("Aready parked,no new spot will be alloted");
-             }
-             else { 
-                    if(driver == 'handicap')
-                    {
-                        if(this.Lot1.length < this.maximumCapacity/2)
-                        {
-                            this.Lot1.push(car)
-                        }
-                        else if(this.Lot2.length < this.maximumCapacity/2)
-                        {
-                           this.Lot2.push(car)
-                       } 
+    }
+
+    park = (car) => {
+            if (this.isFull()){
+            throw new Error('Parking lot is full');
+        }
+        if (typeof car === 'object' && car != null) {
+                if (car.driverType == 'HANDICAP') {
+                    this.findHandicapSlot(car);
+                }
+                else if (car.type == 'LARGE') {
+                    this.findSlotForLargeCar(car);
+                }
+                else if (car.driverType == 'NORMAL' || carType == 'SMALL') {
+                    this.findSlotForNormalDriver(car);
+                }
+        }else{
+            throw new Error('car must be an object and cannot be null');
+        }
+        return true;
+    }
+            
+     
+
+    unpark = (car) => {
+        for (let lot = 0; lot < this.parkingLot.length; lot++) {
+            for (let slot = 0; slot < this.parkingLot[lot].length; slot++) {
+                if (this.parkingLot[lot][slot] === car) {
+                    this.parkingLot[lot][slot] = null;
+                    this.carCount--;
+                    if (this.carCount == this.capacityOfParkingLot - 1){
+                        owner.parkingSpaceAvailable();
                     }
-                    else{
-                    if(count % 2 == 0){
-                    this.Lot1.push(car)
-                    count++
-                    }
-                    else{
-                        this.Lot2.push(car)
-                        count++
-                    }
-                    return true
-                    }
+                    return true;
+                }
+                else{
+                    throw new Error('Aready unparked the car');
+                }
+            }
+        }    
+    }
+
+    isFull = () => {
+        if (this.carCount == this.capacityOfParkingLot) {
+            owner.isFull();
+            airportSecurity.isFull();
+            return true
+        }
+        return false
+    }
+
+    findCar = (car) => {
+        for (let lot = 0; lot < this.parkingLot.length; lot++) {
+            for (let slot = 0; slot < this.parkingLot[lot].length; slot++) {
+                if (this.parkingLot[lot][slot] === car) {
+                    let positionOfCar = { lot: lot, slot: slot };
+                    return true;
+                }
+                else{
+                    throw new Error('Car is not present in the Lot');
                 }
             }
         }
+    }
 
-    unpark = (car) => {
-        if (this.found1(car)) {
-            this.Lot1.splice(this.Lot1.indexOf(car),1)
-            return true
-        }
-        else if(this.found2(car)){
-            this.Lot2.splice(this.Lot2.indexOf(car),1)
-            return true
-        }
-        else{
-            throw new Error("Aready unparked the car");
+    findHandicapSlot = (car) => {
+        for (let lot = 0; lot < this.parkingLot.length; lot++) {
+            for (let slot = 0; slot < this.parkingLot[lot].length; slot++) {
+                if (this.parkingLot[lot][slot] === null) {
+                    this.parkingLot[lot][slot] = car;
+                    this.carCount++;
+                    this.isFull();
+                    return true;
+                }
+            }
         }
     }
+
+    findSlotForNormalDriver = (car) => {
+        for (let lot = 0; lot < this.parkingLot.length; lot++) {
+            for (let slot = 0; slot < this.parkingLot[lot].length; slot++) {
+                if (this.parkingLot[slot][lot] === null) {
+                    this.parkingLot[slot][lot] = car;
+                    this.carCount++;
+                    this.isFull();
+                    return true;
+                }
+            }
+        }
+    }
+
+    findSlotForLargeCar = (car) => { 
+        let emptyArray = [];
+        for(let lot = 0; lot < this.parkingLot.length; lot++){
+            let largelot = 0;
+            for(let slot = 0; slot < this.parkingLot[lot].length; slot++) {
+                if(this.parkingLot[lot][slot] === null) {
+                    largelot++;
+                }
+            }
+            emptyArray[lot] = largelot - 1;
+        }
+        let largelot = Math.max.apply(null,emptyArray)
+        for(let slot = 0; slot < this.parkingLot[largelot].length; slot++){
+            if(this.parkingLot[largelot][slot] === null) {
+                this.parkingLot[largelot][slot] = car;
+                this.carCount++;
+                this.isFull();
+                return true;
+            }
+        }
+    }
+ 
     
-    isFull = () => {
-        if (this.Lot1.length == this.maximumCapacity && this.Lot2.length == this.maximumCapacity) {
-            return true
-        }
-        return false
-    }
 
-    emptySpacesPresent = () => {
-        if (this.maximumCapacity > this.Lot1.length || this.maximumCapacity > this.Lot2.length){
-            return true;
-        }
-        return false;
-       }
-
-    findCar = (car) => {
-        if (this.found1(car) || this.found2(car)) {
-            return true
-        }
-        throw new Error("Car is not present in the Lot");
-    }
-
-    //functions to search car in the lot
-
-    found1 = (car) => { 
-        if(this.Lot1.some(element => element.type == car.type)){
-        return true
-        }
-        return false
-     }
-
-     found2 = (car) => { 
-        if(this.Lot2.some(element => element.type == car.type)){
-        return true
-        }
-        return false
-     }
 }
-module.exports = new parkingLot 
+module.exports = parkingLot;
