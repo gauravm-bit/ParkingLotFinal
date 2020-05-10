@@ -131,7 +131,30 @@ class parkingLot {
         }
     }
 
-    
+    findParameter = (parameter) => {
+        let vehicles = [];
+        let keys = Object.keys(parameter);
+        let values = Object.values(parameter);
+
+        for(let lot = 0; lot < this.parkingLot.length; lot++){
+            for(let slot = 0; slot < this.parkingLot.length; slot++) {
+                if(this.parkingLot[lot][slot] != null) {
+                    if(
+                        this.parkingLot[lot][slot][keys[lot]] === values[lot] &&
+                        this.parkingLot[lot][slot][keys[lot + 1]] === values[lot + 1]
+                    ) {
+                        let vehiclePosition = {
+                            lot: lot,
+                            slot : slot
+                        }
+                        vehicles.push(vehiclePosition);
+                    }
+                    
+                }
+            }
+        }
+        return vehicles;
+    };
 
  
     

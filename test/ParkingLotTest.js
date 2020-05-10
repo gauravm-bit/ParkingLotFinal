@@ -9,15 +9,12 @@ const parkingLot = require('../app/ParkingLot.js')
 const owner = require('../app/Owner.js')
 const airportSecurity = require('../app/AirportSecurity.js')
 let car = {name:"maruti",driverType:driver.NORMAL}
-let car1 = {name:"maruti",driverType:driver.HADNICAP}
-
-
+let car1 = {name:"honda",driverType:driver.HADNICAP}
 let cars =  [ {name:"maruti",driverType:driver.NORMAL,color:'blue',number:'1234'},
               {name:"bmw",driverType:driver.NORMAL,color:'white',number:'8989'},
-              {name:"benz",driverType:driver.NORMAL,color:'silver',number:'23423'},
-              {name:"ford",driverType:driver.NORMAL,color:'white',number:'7896'}
+            //   {name:"benz",driverType:driver.NORMAL,color:'silver',number:'23423'},
+              {name:"bmw",driverType:driver.NORMAL,color:'white',number:'7896'}
             ]           
-
 describe(`Testing for Parking Lot service`, () => {
 
 //TC 1.1 let the driver park the car so that he can board his flight
@@ -38,7 +35,6 @@ it(`given car when not an object should throw an exception`, () => {
     }
  })
 
- 
  //TC 2.1 let the driver unpark so he can go home
 it(`given car when unparked should return true`, () => {
 
@@ -147,8 +143,13 @@ it(`given car when is large should be alloted to lot less full`, () =>{
 it(`given parked cars if white the location should be returned`, () =>{
     let newLot = new parkingLot(2,2,4)
     cars.forEach(newLot.park)
-    let RequiredParameter = newLot.getInfo('white')
-    expect(carProperty[0][0]).to.eql('gaurav');
+    parameter = { color:'white'}
+    let result = newLot.findParameter(parameter)
+    
+    assert.equal(result[0].lot, 0);
+    assert.equal(result[0].slot, 1);
+    assert.equal(result[1].lot,1);
+    assert.equal(result[1].slot, 0);
 
 }) 
 

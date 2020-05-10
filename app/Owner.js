@@ -1,4 +1,3 @@
-const parkingLot = require('../app/ParkingLot.js')
 class owner {
     isFull() {
           throw new Error('Parking lot is full')
