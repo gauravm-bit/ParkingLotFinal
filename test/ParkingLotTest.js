@@ -169,4 +169,18 @@ let vehicles =  [ {number:"MH.03.CA.1234",company:"toyota",driverType:driver.NOR
     assert.equal(result[1].slot,1);
 })
 
+//TC 14.1 Police department knows the location of parked bmw cars
+it(`given parked cars if white the location should be returned`, () =>{
+    let newLot = new parkingLot(2,2,4)
+    cars.forEach(newLot.park)
+    parameter = { name:"bmw"}
+    let result = newLot.findParameter(parameter)
+    assert.equal(result[0].lot, 0);
+    assert.equal(result[0].slot, 1);
+    assert.equal(result[1].lot,1);
+    assert.equal(result[1].slot, 0);
+
+}) 
+
+
 })
