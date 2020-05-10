@@ -12,7 +12,6 @@ let car = {name:"maruti",driverType:driver.NORMAL}
 let car1 = {name:"honda",driverType:driver.HADNICAP}
 let cars =  [ {name:"maruti",driverType:driver.NORMAL,color:'blue',number:'1234'},
               {name:"bmw",driverType:driver.NORMAL,color:'white',number:'8989'},
-            //   {name:"benz",driverType:driver.NORMAL,color:'silver',number:'23423'},
               {name:"bmw",driverType:driver.NORMAL,color:'white',number:'7896'}
             ]           
 describe(`Testing for Parking Lot service`, () => {
@@ -145,12 +144,29 @@ it(`given parked cars if white the location should be returned`, () =>{
     cars.forEach(newLot.park)
     parameter = { color:'white'}
     let result = newLot.findParameter(parameter)
-    
     assert.equal(result[0].lot, 0);
     assert.equal(result[0].slot, 1);
     assert.equal(result[1].lot,1);
     assert.equal(result[1].slot, 0);
 
 }) 
+
+//TC 13.1 Search car names by number plate , company name and colour
+it(`given parked cars when searched with number,brand and color must return location`, () => {
+let vehicles =  [ {number:"MH.03.CA.1234",company:"toyota",driverType:driver.NORMAL,color:"blue"},
+                  {number:"MH.15.CA.8989",company:"bmw",driverType:driver.NORMAL,color:"white"},
+                  {number:"MH.18.KN.7896",company:"toyota",driverType:driver.NORMAL,color:"blue"}
+                ]
+    let newLot = new parkingLot(2,2,4)
+    vehicles.forEach(newLot.park)
+    parameter = {   company:"toyota",
+                    color:"blue"
+                }
+    let result = newLot.findParameter(parameter)
+    assert.equal(result[0].lot,0);
+    assert.equal(result[0].slot,0);
+    assert.equal(result[1].lot,0);
+    assert.equal(result[1].slot,1);
+})
 
 })
