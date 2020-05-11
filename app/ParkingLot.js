@@ -27,10 +27,10 @@ class parkingLot {
                 if (car.driverType == 'HANDICAP') {
                     this.findHandicapSlot(car);
                 }
-                else if (car.type == 'LARGE') {
+                else if (car.carType == 'LARGE') {
                     this.findSlotForLargeCar(car);
                 }
-                else if (car.driverType == 'NORMAL' || carType == 'SMALL') {
+                else if (car.driverType == 'NORMAL' || car.carType == 'SMALL') {
                     this.findSlotForNormalDriver(car);
                 }
         }else{
@@ -81,16 +81,13 @@ class parkingLot {
     }
 
     findHandicapSlot = (car) => {
-        for (let lot = 0; lot < this.parkingLot.length/2; lot++) {
-            for (let slot = 0; slot < this.parkingLot[lot].length/2; slot++) {
+        for (let lot = 0; lot < this.parkingLot.length; lot++) {
+            for (let slot = 0; slot < this.parkingLot[lot].length; slot++) {
                 if (this.parkingLot[lot][slot] === null) {
                     this.parkingLot[lot][slot] = car;
                     this.carCount++;
                     this.isFull();
                     return true;
-                }
-                else{
-                    throw new Error('No handicap spots left')
                 }
             }
         }

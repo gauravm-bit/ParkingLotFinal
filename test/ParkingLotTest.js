@@ -182,7 +182,7 @@ it(`given parked cars if white the location should be returned`, () =>{
 
 }) 
 
-//UC-15 Find the vehicle parked at last 30mins in parking lot
+//UC-15 Find the cars parked at last 30mins in parking lot
 it(`given cars which are parked in lot since last 30 mins should return car position`, () =>{
     let date = new Date();
     let newLot = new parkingLot(2,2,4)
@@ -195,6 +195,21 @@ it(`given cars which are parked in lot since last 30 mins should return car posi
     let carParkedTime = newLot.checkParkedBeforeMinutes(30);
     assert.equal(carParkedTime[0].lot,0);
     assert.equal(carParkedTime[0].slot,0);
+})
+
+//UC-16 Find the cars parked which are of small and handicap type
+it(`given cars which are parked in lot if handicap and of size small return true`, () =>{
+    let newLot = new parkingLot(2,2,4)
+    let vehicles =  [ {number:"MH.03.CA.1234",company:"toyota",carType:carType.SMALL,driverType:driver.HADNICAP,color:"blue"},
+                      {number:"MH.15.CA.8989",company:"bmw",carType:carType.SMALL,driverType:driver.HADNICAP,color:"white"},
+                      {number:"MH.18.KN.7896",company:"toyota",carType:carType.LARGE,driverType:driver.NORMAL,color:"blue"}
+                      
+                    ]
+    vehicles.forEach(newLot.park)
+    parameter = {carType:carType.SMALL, driverType:driver.HADNICAP}
+    let result = newLot.findParameter(parameter);
+    assert.equal(result[0].lot,0);
+    assert.equal(result[0].slot,0);
 })
 
 })
