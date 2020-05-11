@@ -156,7 +156,28 @@ class parkingLot {
         return vehicles;
     };
 
- 
+    checkParkedBeforeMinutes = (minute) => {
+        let vehicles = [];
+        let currentTime = new Date().getMinutes();
+        if(minute != undefined) {
+        for (let lot = 0; lot < this.parkingLot.length; lot++) {
+          for (let slot = 0; slot < this.parkingLot[lot].length; slot++) {
+            if (this.parkingLot[lot][slot] != null) {
+              if (currentTime - this.parkingLot[lot][slot].parkedTime <= minute) {
+                let vehiclePosition = {
+                  lot: lot,
+                  slot: slot,
+                };
+                vehicles.push(vehiclePosition);
+              }
+            }
+          }
+        }
+      }
+        return vehicles;
+      };
+    
+    
     
 
 }

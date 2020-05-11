@@ -186,18 +186,15 @@ it(`given parked cars if white the location should be returned`, () =>{
 it(`given cars which are parked in lot since last 30 mins should return car position`, () =>{
     let date = new Date();
     let newLot = new parkingLot(2,2,4)
-    let parkedTime = date.getMinutes() - 15;
+    let parkedTime = date.getMinutes() - 30;
     let vehicles =  [ {number:"MH.03.CA.1234",company:"toyota",driverType:driver.NORMAL,color:"blue",parkedTime: parkedTime},
                       {number:"MH.15.CA.8989",company:"bmw",driverType:driver.NORMAL,color:"white"},
                       {number:"MH.18.KN.7896",company:"toyota",driverType:driver.NORMAL,color:"blue"}
                     ]
     vehicles.forEach(newLot.park)
-    let carParkedTime = newLot.checkParkedBeforeMinutes();
+    let carParkedTime = newLot.checkParkedBeforeMinutes(30);
     assert.equal(carParkedTime[0].lot,0);
     assert.equal(carParkedTime[0].slot,0);
 })
-
-
-
 
 })
