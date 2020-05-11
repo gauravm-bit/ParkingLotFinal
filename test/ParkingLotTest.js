@@ -198,7 +198,7 @@ it(`given cars which are parked in lot since last 30 mins should return car posi
 })
 
 //UC-16 Find the cars parked which are of small and handicap type
-it(`given cars which are parked in lot if handicap and of size small`, () =>{
+it(`given cars which are parked in lot if handicap and of size small should return true`, () =>{
     let newLot = new parkingLot(2,2,4)
     let vehicles =  [ {number:"MH.03.CA.1234",company:"toyota",carType:carType.SMALL,driverType:driver.HADNICAP,color:"blue"},
                       {number:"MH.15.CA.8989",company:"bmw",carType:carType.SMALL,driverType:driver.HADNICAP,color:"white"},
@@ -210,6 +210,22 @@ it(`given cars which are parked in lot if handicap and of size small`, () =>{
     let result = newLot.findParameter(parameter);
     assert.equal(result[0].lot,0);
     assert.equal(result[0].slot,0);
+})
+
+//UC-17 Give info about cars with fradulent information
+it(`given cars with fraudulent numberplates should return the vehicles`, () =>{
+let newLot = new parkingLot(2,2,4)
+    let vehicles =  [ {number:"",company:"toyota",carType:carType.SMALL,driverType:driver.HADNICAP,color:"blue"},
+                      {number:"MH.15.CA.8989",company:"bmw",carType:carType.SMALL,driverType:driver.HADNICAP,color:"white"},
+                      {number:"",company:"toyota",carType:carType.LARGE,driverType:driver.NORMAL,color:"blue"}
+                    ]
+    vehicles.forEach(newLot.park)
+    parameter = {number:""}
+    let result = newLot.findParameter(parameter);
+    assert.equal(result[0].lot,0);
+    assert.equal(result[0].slot,0);
+    assert.equal(result[1].lot,1);
+    assert.equal(result[1].slot,0);
 })
 
 })
