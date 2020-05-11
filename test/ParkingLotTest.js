@@ -198,7 +198,7 @@ it(`given cars which are parked in lot since last 30 mins should return car posi
 })
 
 //UC-16 Find the cars parked which are of small and handicap type
-it(`given cars which are parked in lot if handicap and of size small return true`, () =>{
+it(`given cars which are parked in lot if handicap and of size small`, () =>{
     let newLot = new parkingLot(2,2,4)
     let vehicles =  [ {number:"MH.03.CA.1234",company:"toyota",carType:carType.SMALL,driverType:driver.HADNICAP,color:"blue"},
                       {number:"MH.15.CA.8989",company:"bmw",carType:carType.SMALL,driverType:driver.HADNICAP,color:"white"},
